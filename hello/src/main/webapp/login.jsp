@@ -13,6 +13,7 @@
 			<h1>로그인 결과</h1>
 		</div>
 		<div>
+		<h2>아이디 : ${param.id }</h2>
 			<h2>아이디 : <%= request.getParameter("id") %></h2>
 			<h2>패스워드 : <%= request.getParameter("password") %></h2>
 			<%= request.getRequestURL() %><p> <!-- 호출 URL -->

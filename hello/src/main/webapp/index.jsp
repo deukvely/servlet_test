@@ -31,6 +31,10 @@
 					<input type="reset" value = "취소">
 				</div>
 			</form>
+			<div>
+			<h1>EL 표현식 테스트</h1>
+			${2+3 } : ${"홍길동"}
+			</div>
 		</div>
 	</div>
 </body>

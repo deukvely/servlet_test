@@ -22,6 +22,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<package name="co.san.example" />
+		<package name="co.micol.example" />
 	</mappers>
 </configuration>

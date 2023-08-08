@@ -14,7 +14,7 @@
 	
 	<insert id="memberInsert" parameterType="co.micol.execsample.member.service.MemberVO">
 		INSERT INTO MEMBER (MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_IMG, MEMBER_TEL, MEMBER_ADDRESS)
-		VALUES(#{memberId}, #{memberPassword}, #{memberName}, #{memberImg}, #{memberTel}, #{member_address)
+		VALUES(#{memberId}, #{memberPassword}, #{memberName}, #{memberImg}, #{memberTel}, #{memberAddress})
 	</insert>
 	<update id="memberUpdate" parameterType="co.micol.execsample.member.service.MemberVO">
 		UPDATE MEMBER

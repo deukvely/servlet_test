@@ -24,8 +24,8 @@ public class AjaxMemberIdCheck extends HttpServlet {
 			throws ServletException, IOException {
 		MemberService dao = new MemberServiceImpl();
 		MemberVO vo = new MemberVO();
-		vo.setMemberId(request.getParameter("id"));
-
+		vo.setMemberId(request.getParameter("memberId"));
+	
 		vo = dao.memberSelect(vo);
 		String txt = "yes"; // 사용가능ID
 		if (vo != null) {

@@ -46,7 +46,7 @@
 			</div>
 			<div>
 				<form id="frm" method="post">
-					<input type="hidden" id="noticeId" name="noticeId" value="${n.noticeId}"}>
+					<input type="hidden" id="noticeId" name="noticeId" value="${n.noticeId}">
 				</form>
 			</div>	
 		</div>

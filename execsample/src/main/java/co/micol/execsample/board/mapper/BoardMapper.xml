@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.execsample.board.mapper.BoardMapper">
+	<select id="boardSelectList" resultType="co.micol.execsample.board.service.BoardVO">
+		SELECT * FROM BOARD
+		<if test="key == 'title'">WHERE BOARD_TITLE LIKE '%' || #{val} || '%'</if>
+		<if test="key == 'subject'">WHERE BOARD_SUBJECT LIKE '%' || #{val} || '%'</if>
+		<if test="key == 'writer'">WHERE BOARD_WRITER LIKE '%' || #{val} || '%'</if>
+		ORDER BY BOARD_NUMBER DESC
+	</select>
+	
+	<select id="boardSearchList" resultType="co.micol.execsample.board.service.BoardVO">
+		SELECT * FROM BOARD WHERE
+		<if test="key == 'title'">WHERE BOARD_TITLE LIKE '%' || #{val} || '%'</if>
+		<if test="key == 'subject'">WHERE BOARD_SUBJECT LIKE '%' || #{val} || '%'</if>
+		<if test="key == 'writer'">WHERE BOARD_WRITER LIKE '%' || #{val} || '%'</if>
+		ORDER BY BOARD_NUMBER DESC
+	</select>
+	
+	<select id="boardSelect" resultType="co.micol.execsample.board.service.BoardVO">
+	 	SELECT * FROM BOARD BOARD_NUMBER = #{boardNumber}
+	</select>
+
+	<insert id="boardInsert" parameterType="co.micol.execsample.board.service.BoardVO">
+		<selectKey resultType="int" keyProperty="boardNumber" order="BEFORE">
+			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1
+   				 ELSE MAX(BOARD_NUMBER)+1 END AS boardNumber FROM BOARD; 
+		</selectKey>
+		
+		INSERT INTO BOARD VALUES(#{boardNumber}, #{boardWriter}, #{boardTitle}, #{boardSubject}, #{boardDate}, 0, #{boardAttech}, #{boardAttechDir})
+	</insert>
+
+	<update id="boardUpdate" parameterType="co.micol.execsample.board.service.BoardVO">
+		UPDATE BOARD
+		<set>
+			<if test="BOARD_WRITER != NULL">BOARD_WRITER = #{boardWriter},</if>
+			<if test="BOARD_TITLE != NULL">BOARD_TITLE = #{boardTitle},</if>
+			<if test="BOARD_SUBJECT != NULL">BOARD_SUBJECT = #{boardSubject},</if>
+			<if test="BOARD_DATE != NULL">BOARD_DATE = #{boardDate}</if>
+		</set>
+	</update>
+	
+	<update id="boardUpdateHit" parameterType="co.micol.execsample.board.service.BoardVO">
+		UPDATE BOARD SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUMBER = #{id}
+		
+	</update>
+
+	<delete id="boardDelete" parameterType="co.micol.execsample.board.service.BoardVO">
+		DELETE FROM BOARD WHERE BOARD_NUMBER = #{boardNumber}
+	</delete>
+</mapper>

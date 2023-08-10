@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.micol.example.notice.map.NoticeMapper">
 
-	<select id="noticeSelectList"
-		resultType="co.micol.example.notice.service.NoticeVO">
+	<select id="noticeSelectList" resultType="co.micol.example.notice.service.NoticeVO">
 		SELECT * FROM NOTICE
 		<if test="key == 'title'">WHERE NOTICE_TITLE LIKE '%'|| #{val} ||'%'</if>
 		<if test="key == 'subject'">WHERE NOTICE_SUBJECT LIKE '%'|| #{val} ||'%'</if>
@@ -11,45 +10,43 @@
 		ORDER BY NOTICE_ID DESC
 	</select>
 
-	<select id="noticeSearchList"
-		resultType="co.micol.example.notice.service.NoticeVO">
-		SELECT * FROM NOTICE
+	<select id="noticeSearchList" resultType="co.micol.example.notice.service.NoticeVO">
+		SELECT * FROM NOTICE WHERE
 		<if test="key == 'title'">NOTICE_TITLE LIKE '%'|| #{val} ||'%'</if>
 		<if test="key == 'subject'">NOTICE_SUBJECT LIKE '%'|| #{val} ||'%'</if>
 		<if test="key == 'writer'">NOTICE_WRITER LIKE '%'|| #{val} ||'%'</if>
 		ORDER BY NOTICE_ID DESC
 	</select>
 
-	<select id="noticeSelect"
-		resultType="co.micol.example.notice.service.NoticeVO">
+	<select id="noticeSelect" resultType="co.micol.example.notice.service.NoticeVO">
 		SELECT * FROM NOTICE WHERE NOTICE_ID = #{noticeId}
 	</select>
 
-	<insert id="noticeInsert"
-		parameterType="co.micol.example.notice.service.NoticeVO">
-		<selectKey resultType="int" keyProperty="noticeId"
-			order="BEFORE">
+	<insert id="noticeInsert" parameterType="co.micol.example.notice.service.NoticeVO">
+		<selectKey resultType="int" keyProperty="noticeId" order="BEFORE">
 			SELECT CASE WHEN MAX(NOTICE_ID) IS NULL THEN 1
 			ELSE MAX(NOTICE_ID) + 1 END AS noticeId FROM NOTICE
 		</selectKey>
 
 		INSERT INTO NOTICE
 		VALUES(#{noticeId}, #{noticeWriter}, #{noticeTitle},
-		#{noticeSubject}, #{noticeDate}, #{noticeAttech}, #{noticeAttechDirectory},
-		0)
+		#{noticeSubject}, #{noticeDate}, #{noticeAttech}, #{noticeAttechDirectory}, 0)
 	</insert>
 	
 	<delete id="noticeDelete" parameterType="co.micol.example.notice.service.NoticeVO">
-	
+		DELETE FROM NOTICE WHERE NOTICE_ID = #{noticeId}
 	</delete>
 
-	<update id="noticeUpdate"
-		parameterType="co.micol.example.notice.service.NoticeVO">
+	<update id="noticeUpdate" parameterType="co.micol.example.notice.service.NoticeVO">
 		UPDATE NOTICE
 		<set>
 			<if test="noticeTitle !=null">NOTICE_TITLE = #{noticeTitle},</if>
-			<if test="noticeSubject !=null">NOTICE_SUBJECT = #{noticeSubject}</if>
+			<if test="noticeSubject !=null">NOTICE_SUBJECT = #{noticeSubject},</if>
+			<if test="noticeDate != null">NOTICE_DATE = #{noticeDate},</if>
+			<if test="noticeAttech != null">NOTICE_ATTECH = #{noticeAttech},</if>
+			<if test="noticeAttechDirectory != null">NOTICE_ATTECH_DIRECTORY = #{noticeAttechDirectory}</if>
 		</set>
+		WHERE NOTICE_ID = #{noticeId}
 	</update>
 
 	<update id="noticeUpdateHit" parameterType="int">

@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>홈 ㅎㅇ</h1>
+<div>
+	<div><h1>Welcome to MyWebSite!!!!!</h1></div>
+	<div>
+		<img width="640" height="500" src="img/picture.jpg">
+	</div>
+</div>
 </body>
 </html>

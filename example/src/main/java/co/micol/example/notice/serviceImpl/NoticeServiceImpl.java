@@ -53,4 +53,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return map.noticeDelete(vo);
 	}
 
+	@Override
+	public void noticeUpdateHit(int id) {
+		map.noticeUpdateHit(id);
+		
+	}
+
 }

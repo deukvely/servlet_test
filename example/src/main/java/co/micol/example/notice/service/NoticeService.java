@@ -13,5 +13,5 @@ public interface NoticeService {
 	int noticeInsert(NoticeVO vo);
 	int noticeUpdate(NoticeVO vo);
 	int noticeDelete(NoticeVO vo);
-//	void noticeUpdateHit(int id);
+	void noticeUpdateHit(int id);
 }

@@ -3,12 +3,12 @@
 <mapper namespace="co.micol.example.member.map.MemberMapper">
 	<select id="memberSelectList"
 		resultType="co.micol.example.member.service.MemberVO">
-		SELECT * FROM MEMBER
+		SELECT * FROM MEMBER1
 	</select>
 
 	<select id="memberSelect"
 		resultType="co.micol.example.member.service.MemberVO">
-		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
+		SELECT * FROM MEMBER1 WHERE MEMBER_ID = #{memberId}
 		<if test="memberPassword != null">
 			AND MEMBER_PASSWORD = #{memberPassword}
 		</if>
@@ -17,7 +17,7 @@
 	<insert id="memberInsert"
 		parameterType="co.micol.example.member.service.MemberVO">
 		INSERT INTO
-		MEMBER(MEMBER_ID, MEMBER_PASSWORD,
+		MEMBER1(MEMBER_ID, MEMBER_PASSWORD,
 		MEMBER_NAME, MEMBER_IMG, MEMBER_TEL, MEMBER_ADDRESS)
 		VALUES(#{memberId}, #{memberPassword}, #{memberName}, #{memberImg},
 		#{memberTel}, #{memberAddress})
@@ -25,7 +25,7 @@
 
 	<update id="memberUpdate"
 		parameterType="co.micol.example.member.service.MemberVO">
-		UPDATE MEMBER
+		UPDATE MEMBER1
 		<set>
 			<if test="memberPassword != null">MEMBER_PASSWORD = #{memberPassword},</if>
 			<if test="memberName != null">MEMBER_NAME = #{memberName},</if>
@@ -41,7 +41,7 @@
 
 	<delete id="memberDelete"
 		parameterType="co.micol.example.member.service.MemberVO">
-		DELETE FROM MEMBER WHERE MEMBER_ID = #{memberId}
+		DELETE FROM MEMBER1 WHERE MEMBER_ID = #{memberId}
 	</delete>
 
 </mapper>

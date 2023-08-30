@@ -21,7 +21,7 @@
 					<option value="writer">작성자</option>
 				</select>&nbsp;&nbsp;
 				<input type="text" id="val" name="val">
-				<input type="button" onClick="searchList()" value="검색">
+				<input type="button" onclick="searchList()" value="검색">
 			</form>
 		</div>
 		<div>
@@ -39,8 +39,7 @@
 				<tbody>
 					<c:if test="${not empty notices}">
 						<c:forEach items="${notices}" var="m">
-							<tr onmouseover="this.style.background='yellow'"onmouseout="this.style.background='white'"
-								onclick="selectNotice('${m.noticeId}')">
+							<tr onmouseover="this.style.background='yellow'" onmouseout="this.style.background='white'" onclick="selectNotice('${m.noticeId}')">
 
 								<td align="center">${m.noticeId}</td>
 								<td align="center">${m.noticeTitle}</td>

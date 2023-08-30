@@ -56,7 +56,7 @@ public class NoticeInsert extends HttpServlet {
 
 		String viewName = "notice/noticemessage";
 		ViewResolve.forward(request, response, viewName);
-
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

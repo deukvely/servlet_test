@@ -6,6 +6,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- Custom fonts for this template-->
+<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="./css/sb-admin-2.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<style>
+		.cheader .replyId {
+			display: inline-block;
+			width: 50px;
+		}
+		
+		.cheader .replyer {
+			float: right;
+		}
+	</style>
 </head>
 <body>
 <div align="center">
@@ -28,7 +45,7 @@
 					<tr>
 						<th>내용</th>
 						<td colspan="5">
-							<textarea rows="20" cols="80" readonly="readonly">${n.noticeSubject }</textarea>
+							<textarea rows="4" cols="80" readonly="readonly">${n.noticeSubject }</textarea>
 						</td>
 					</tr>
 					<tr>
@@ -51,8 +68,24 @@
 			</div>	
 		</div>
 	</div>
+	<div class="container-fluid">
+		<div class="reply">
+			<h3>댓글목록</h3>
+			<div class="col-lg-6">
+				<div class="card mb-4" style="display: none;">
+		           	<div class="cheader">
+		                <span class="replyId">댓글번호</span>
+		                <span class="replyer">user1</span>
+	                </div>
+	              	<div class="cbody">
+		           		댓글내용입니다.
+		          	</div>
+				</div>
+		 	</div>
+	   	</div>
+	</div>
 	<script type="text/javascript">
-		function noticeUpdate(	str) {
+		function noticeUpdate(str) {
 			if (str == 'E') {
 				document.getElementById("frm").action = "noticeeditform.do";
 			} else {
@@ -60,6 +93,28 @@
 			}
 			document.getElementById("frm").submit();
 		}
+	</script>
+	
+	<script src="./js/reply.js"></script>
+	<script>
+		var noticeId = '<c:out value="${n.noticeId}" />';
+		console.log('notice: ', noticeId);
+	
+		var reply = new Reply();
+		reply.replyList(noticeId, function(data){
+			
+			console.log(data);
+			
+			for (let i=0; i<data.length; i++){
+				let temp = $('div.card.mb-4').eq(0).clone();
+				temp.css('display', 'block');
+				
+				temp.find('span.replyId').text(data[i].replyId);
+				temp.find('span.replyer').text(data[i].replyer);
+				temp.find('div.cbody').text(data[i].reply);
+				$('div.col-lg-6').append(temp);
+			}
+		})
 	</script>
 </body>
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+	<h1>메소드 체이닝</h1>
+	<ul id="list">
+		<li>첫 번째 아이템이에요!</li>
+		<li>두 번째 아이템이에요!</li>
+		<li>세 번째 아이템이에요!</li>
+	</ul>
+	<button>텍스트 변경</button>
+	<h1>.detach() 메소드</h1>
+	
+	<div id="container">
+		<div>첫 번째 컨텐츠에요!</div>
+		<div class="content">두 번째 컨텐츠에요!</div>
+		<div class="content">세 번째 컨텐츠에요!</div>
+	</div>
+	<br>
+	<button id="detachBtn">div 요소 삭제</button>
+	<button id="restoreBtn">div 요소 복구</button>
+</body>
+<script>
+	$(function(){
+		$("button").on("click", function(){
+			$("#list").find("li").eq(1).html("두번째지롱");
+		});
+	});
+	
+	$(function(){
+		var data;
+		$("detachBtn").on("click", function(){
+			data = $("#container").detach();
+		})
+		
+	})
+</script>
+</html>

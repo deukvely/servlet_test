@@ -46,7 +46,7 @@ public class AjaxMemberEdit extends HttpServlet {
 		
 		Map<String, Object> map = new HashMap<>();
 
-		if (service.membersInsert(vo)){
+		if (service.membersUpdate(vo)){
 			map.put("retCode", "Success");
 		} else {
 			map.put("retCode", "Fail");

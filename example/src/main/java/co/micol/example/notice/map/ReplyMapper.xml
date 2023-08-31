@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.example.notice.map.ReplyMapper">
+	<select id="replySelectList" resultType="co.micol.example.notice.service.ReplyVO">
+		SELECT * FROM REPLY
+		WHERE NOTICE_ID = ${noticeId}
+	</select>
+	
+	<select id="replySelect" resultType="co.micol.example.notice.service.ReplyVO">
+		SELECT * FROM REPLY
+		WHERE REPLY_ID = ${replyId}
+	</select>
+	
+	<insert id="replyInsert" parameterType="co.micol.example.notice.service.ReplyVO">
+		<selectKey resultType="co.micol.example.notice.service.ReplyVO" keyProperty="replyId,replyDate" order="BEFORE">
+			SELECT SEQ_REPLY.NEXTVAL AS REPLYID, SYSDATE AS REPLYDATE FROM DUAL
+		</selectKey>
+		INSERT INTO REPLY(reply_id, notice_id,reply,replyer,reply_date)
+		VALUES(#{replyId},#{noticeId},#{reply},#{replyer},#{replyDate})
+	</insert>
+	
+	<update id="replyUpdate" parameterType="co.micol.example.notice.service.ReplyVO">
+		UPDATE REPLY
+		<set>
+			<if test="reply != null">reply = #{reply},</if>
+		</set>
+		WHERE REPLY_ID = #{REPLYID}
+	</update>
+	
+	<delete id="replyDelete" parameterType="co.micol.example.notice.service.ReplyVO">
+		DELETE FROM REPLY WHERE REPLY_ID = #{replyId}
+	</delete>
+</mapper>

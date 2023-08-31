@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+	<label><input type="radio" name="gender" id="" checked>남</label>
+	<label><input type="radio" name="gender" id="">여</label>
+	<br>
+	<script>
+		$('input:checked').parent().css('background', 'red');
+	</script>
+	
+	<select name="left" style="height:150px;" multiple>
+		<option value="">opt1</option>
+		<option value="">opt2</option>
+		<option value="">opt3</option>
+		<option value="">opt4</option>
+		<option value="">opt5</option>
+	</select>
+	
+	<button>&raquo;</button>
+	<button>&laquo;</button>
+	<button>empty</button>
+	
+	<select name="right" style="height:150px;" multiple>
+		<option value="">opt6</option>
+		<option value="">opt7</option>
+		<option value="">opt8</option>
+		<option value="">opt9</option>
+		<option value="">opt10</option>
+	</select>
+	<h1>.add() 메소드</h1>
+	<ul>
+		<li>첫 번째 아이템이에요!</li>
+		<li>두 번째 아이템이에요!</li>
+		<li>세 번째 아이템이에요!</li>
+	</ul>
+	<p id="first">첫 번째 단락이에요!</p>
+	<button>li 요소 집합에 p 요소를 추가</button>
+	
+	
+	<script>
+			var target = $('option:contains(opt6)');
+			console.log(target.parent().prev().siblings().eq(0));
+			//$('button:eq(0)').on("click", function(){
+			//	$('select[name=left] option:selected').insertAfter($('select[name=right] option:last'));
+			//})
+			$('button:eq(0)').on("click", function(){
+				$('select[name=left] option:selected').appendTo($('select[name=right]'));
+			})
+			
+			$('button:eq(1)').on("click", function(){
+				$('select[name=right] option:selected').appendTo($('select[name=left]'));
+			})
+			
+			$('button:contains(empty)').on('click', function(){
+				$('select[name=right]').empty();
+			})
+			
+			
+			$(function() { // add
+			$("button").on("click", function() {
+				console.log($("li").add("<h3>Hello</h3>"))
+				$("li")
+					.add("<h3>")
+					.add("<p>")
+					.appendTo($('body'))							// 선택한 <li>요소의 집합에 <p>요소를 추가함.
+					.css({
+					"border": "2px solid green"     // 해당 요소의 CSS 스타일을 변경함.
+					})
+				});
+			});
+			
+			[1,2,3].forEach(function(item, idx, ary){
+				console.log(item)
+			})
+			
+			$('ul li').each(function (idx, elem){
+				console.log(elem);
+				$(elem).css('color', 'red');
+				$(elem).on('click', function(){
+					alert($(this).text())
+				})
+			})
+			
+			
+	</script>
+</body>
+</html>

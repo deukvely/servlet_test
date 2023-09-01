@@ -17,41 +17,41 @@ import co.micol.example.notice.service.ReplyService;
 import co.micol.example.notice.service.ReplyVO;
 import co.micol.example.notice.serviceImpl.ReplyServiceImpl;
 
-@WebServlet("/AjaxReplyAdd.do")
-public class AjaxReplyAdd extends HttpServlet {
+/**
+ * Servlet implementation class AjaxReplySearch
+ */
+@WebServlet("/AjaxReplySearch.do")
+public class AjaxReplySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AjaxReplyAdd() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AjaxReplySearch() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String noticeId = request.getParameter("noticeId");
-		String reply = request.getParameter("reply");
-		String replyer = request.getParameter("replyer");
-		
-		ReplyVO vo = new ReplyVO();
-		vo.setNoticeId(Integer.parseInt(noticeId));
-		vo.setReply(reply);
-		vo.setReplyer(replyer);
-		
+		String replyId = request.getParameter("rno");		
 		ReplyService svc = new ReplyServiceImpl();
 		
-		Map<String, Object> map = new HashMap<>();
-		if(svc.replyInsert(vo)) {
-			map.put("retCode", "Success");
-			map.put("data", vo);
-		} else {
-			map.put("retCode", "Fail");
-			map.put("data", "처리 중 에러");
-		}
+		ReplyVO vo = svc.replySelect(Integer.parseInt(replyId));
+		
 		Gson gson = new GsonBuilder().create();
 		
 		response.setContentType("text/json; charset=utf-8");
-		response.getWriter().append(gson.toJson(map));
+		response.getWriter().append(gson.toJson(vo));
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

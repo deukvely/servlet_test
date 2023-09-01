@@ -23,6 +23,7 @@
 		UPDATE REPLY
 		<set>
 			<if test="reply != null">reply = #{reply},</if>
+			<if test="replyer != null">replyer = #{replyer},</if>
 		</set>
 		WHERE REPLY_ID = #{REPLYID}
 	</update>

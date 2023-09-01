@@ -113,7 +113,7 @@
 					<div class='form-group'>
 						<label>Replyer</label>
 						<input class='form-control' name='replyer' value='replyer'>
-						<input type="hidden" id="id" name='replyId' value='replyId' />
+						<input type="hidden" name='replyerId' value='replyerId'>
 					</div>
 					<div class='form-group'>
 						<label>Reply Date</label>
@@ -222,24 +222,23 @@
 				$('input[name=reply]').val(data.reply);
 				$('input[name=replyer]').val(data.replyer);
 				$('input[name=replyDate]').val(data.replyDate);
-				$('input[id=id]').val(data.rno); 
 			})
 		})
-		
 		// 수정, 삭제 화면 
 		$('#modalModBtn').on('click', function() {
-			var replyId = $('input[id=id]').val(); 
+			var replyId = $('input[name=replyId]').val(); 
 			var content = $('input[name=reply]').val();
 			var replyer = $('input[name=replyer]').val(); 
 			console.log(replyer);
-			console.log("123123"+replyId);
+			console.log(replyId);
 			var param = {rno:replyId, reply: content, replyer}
 			
 			reply.replyEdit(param, function(data){
 				
-				$('input[name=replyId]').val(data.data.replyId);
-				$('input[name=reply]').val(data.data.reply);
-				$('input[name=replyer]').val(data.data.replyer);
+				$('input[name=replyId]').val(data.replyId);
+				$('input[name=reply]').val(data.reply);
+				$('input[name=replyer]').val(data.replyer);
+				
 			})
 		})
 		

@@ -1,6 +1,7 @@
 package co.micol.example.notice.service;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import lombok.Data;
 

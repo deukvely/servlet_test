@@ -34,7 +34,7 @@ public class AjaxReplyList extends HttpServlet {
 		Gson gson = new GsonBuilder().create();
 		
 		response.setContentType("text/json; charset=utf-8");
-		response.getWriter().append(gson.toJson(list));
+		response.getWriter().print(gson.toJson(list));
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.example.ajax.mapper.TodoMapper">
+	<insert id="todoInsert" parameterType="co.micol.example.ajax.service.TodoVO">
+		<selectKey resultType="co.micol.example.ajax.service.TodoVO">
+			SELECT SEQ_TODO.NEXTVAL AS TODONUMBER, SYSDATE AS DUEDATE FROM DUAL
+		</selectKey>
+		INSERT INTO TODO
+		VALUES(#{todoNumber}, #{todo}, #{dueDate}, #{complete})
+	</insert>
+	
+	<update id="todoUpdate" parameterType="co.micol.example.ajax.service.TodoVO">
+		UPDATE TODO 
+		<set>
+			<if test="complete != null">complete = #{complete},</if>
+			<if test="dueDate != null">due_date = #{dueDate},</if>
+		</set>
+		WHERE TODO_NUMBER = #{todoNumber}
+	</update>
+	
+	<delete id="todoDelete" parameterType="co.micol.example.ajax.service.TodoVO">
+		DELETE FROM TODO WHERE TODO_NUMBER = "#{todoNumber}"
+	</delete>
+	
+	<select id="todoList" resultType="co.micol.example.ajax.service.TodoVO">
+		SELECT * FROM TODO
+	</select>
+</mapper>

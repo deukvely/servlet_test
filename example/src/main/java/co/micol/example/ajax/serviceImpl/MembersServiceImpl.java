@@ -9,6 +9,7 @@ import co.micol.example.ajax.service.MembersService;
 import co.micol.example.ajax.service.MembersVO;
 import co.micol.example.common.DataSources;
 
+
 public class MembersServiceImpl implements MembersService {
 	private SqlSession sqlSession = DataSources.getInstance().openSession(true);
 	private AjaxMapper map = sqlSession.getMapper(AjaxMapper.class);

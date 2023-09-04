@@ -7,13 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Custom fonts for this template-->
-<link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="./css/sb-admin-2.min.css" rel="stylesheet">
-<link href="./css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="./js/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<style>
 		.cheader .replyId {
 			display: inline-block;
@@ -70,69 +66,31 @@
 		</div>
 	</div>
 	<!-- 댓글부분. -->
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="fa fa-comments fa-fw"></i>Reply
-					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-				</div>
-				<div class="panel-body">
-					<ul class="chat">
-						<li class="left clearfix" data-rno="12"  style="display: none;">
-							<div>
-								<div class="header">
-									<strong class="primary-font">user00</strong> <!-- 작성자 -->
-									<small class="pull-right text-muted">2023-03-05 13:13</small>
-								</div>
-								<p>Good job!</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="panel-footer">
-	
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end 댓글 -->
-	<!-- Modal 댓글 등록 -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
-				</div>
-				<div class="modal-body">
-					<div class='form-group'>
-						<label>Reply</label>
-						<input class='form-control' name='reply' value='New Reply!!!!'>
-					</div>
-					<div class='form-group'>
-						<label>Replyer</label>
-						<input class='form-control' name='replyer' value='replyer'>
-						<input type="hidden" id="id" name='replyId' value='replyId' />
-					</div>
-					<div class='form-group'>
-						<label>Reply Date</label>
-						<input class='form-control' name='replyDate' value='replyDate'>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button id='modalModBtn' type="button" class="btn btn-warning" data-dismiss="modal">Modify</button>
-					<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-					<button id='modalRegisterBtn' type="button" class="btn btn-default">Register</button>
-					<button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
+	<div class="addReply">
+		<label>댓글내용<input type="text" name="addContent"></label>
+		<label>작성자<input type="text" name="addWriter"></label>
+		<button type="button" id="addBtn">추가</button>
 	</div>
 	<!-- /.modal -->
-	<script src="./js/reply.js"></script>
+	<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>댓글번호</th>
+                <th>댓글내용</th>
+                <th>작성자</th>
+                <th>작성일자</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+               	<th>댓글번호</th>
+                <th>댓글내용</th>
+                <th>작성자</th>
+                <th>작성일자</th>
+            </tr>
+        </tfoot>
+    </table>
+    <script src="./js/reply.js"></script>
 	<script type="text/javascript">
 	
 		function noticeUpdate(str) {
@@ -145,104 +103,54 @@
 		}
 	</script>
 	
-
-	<script src="./js/jquery.min.js"></script>
-	<script src="./js/bootstrap.min.js"></script>
-	
 	<script>
 		var noticeId = '<c:out value="${n.noticeId}" />';
 		console.log('notice: ', noticeId);
 		
-		var mils = Date.parse('Aug 29, 2023, 9:16:27 AM'); // 문자열 1970년대부터 1초씩 한 것
-		var today = new Date(mils); // 날짜 함수로 변환
-		console.log(today); // 연도로 출력
-		console.log(today.getMonth()+1); // 월로 출력
-		console.log(today.getDate());    // 일수로 출력
-		
-		
-		var reply = new Reply();
-		reply.replyList(noticeId, function(data){
-			
-			for (let i=0; i<data.length; i++){
-				let temp = $('.chat > li').eq(0).clone(); // 템플릿 복제 시작
-				temp.css('display', 'block');
-				
-				temp.attr('data-rno', data[i].replyId);
-				temp.find('strong').text(data[i].replyer);
-				temp.find('small').text(reply.displayDateTime(data[i].replyDate));
-				temp.find('p').text(data[i].reply);
-				
-				$('.chat').append(temp);
-			}
-		})
-		
-		// 댓글 등록화면
-		$('#addReplyBtn').on('click', function(){
-			// 수정, 삭제 버튼 숨김
-			$('#modalModBtn').hide();
-			$('#modalRemoveBtn').hide();
-			$('#modalRegisterBtn').show();
-			$('.modal').modal('show');
-		})
-		
-		// 댓글등록처리
-		$('#modalRegisterBtn').on('click', function(){
-			var content = $('input[name=reply]').val();
-			var replyer = $('input[name=replyer]').val(); 
-			var param = {noticeId, reply: content, replyer}
-			reply.replyAdd(param, function(data){
-				
-				let temp = $('.chat > li').eq(0).clone(); // 템플릿 복제 시작
-				temp.css('display', 'block');
-				
-				temp.attr('data-rno', data.data.replyId);
-				temp.find('strong').text(data.data.replyer);
-				temp.find('small').text(reply.displayDateTime(data.data.replyDate));
-				temp.find('p').text(data.data.reply);
-				
-				$('.chat').append(temp);
-			});
-		})
-		
-		
-		// chat에 클릭을 li에게 위임
-		$('.chat').on('click', 'li', function(){
-			$('#modalModBtn').show();
-			$('#modalRemoveBtn').show();
-			$('#modalRegisterBtn').hide();
-			$('.modal').modal('show');			
-			console.log(replyId);
-			//var rno = $(this).attr('data-rno');
-			var rno = $(this).data('rno');
-			
-			// data-rno = 1
-			reply.replySearch(rno, function(data){
-				console.log(data);
-				
-				$('input[name=reply]').val(data.reply);
-				$('input[name=replyer]').val(data.replyer);
-				$('input[name=replyDate]').val(data.replyDate);
-				$('input[id=id]').val(data.rno); 
-			})
-		})
-		
-		// 수정, 삭제 화면 
-		$('#modalModBtn').on('click', function() {
-			var replyId = $('input[id=id]').val(); 
-			var content = $('input[name=reply]').val();
-			var replyer = $('input[name=replyer]').val(); 
-			console.log(replyer);
-			console.log("123123"+replyId);
-			var param = {rno:replyId, reply: content, replyer}
-			
-			reply.replyEdit(param, function(data){
-				
-				$('input[name=replyId]').val(data.data.replyId);
-				$('input[name=reply]').val(data.data.reply);
-				$('input[name=replyer]').val(data.data.replyer);
-			})
-		})
+		//datatable 목록 만들기
 		
 	</script>
+	<script>
+		const table = new DataTable('#example', {
+	        ajax: './AjaxDatatable.do',
+	        columns: [
+	        	{ data: 'replyId'},
+	        	{ data: 'reply'},
+	        	{ data: 'replyer'},
+	        	{ data: 'replyDate'},
+	        ]
+	    });
+		
+		// 추가 버튼
+	
+		
+		$('#addBtn').on('click', function(){
+			var content = $('input[name=addContent]').val();
+			var writer = $('input[name=addWriter]').val();
+			console.log(writer)
+			const reply = new Reply();
+			const param={
+					noticeId,
+					reply:content,
+					replyer:writer
+			}
+			reply.replyAdd(param, function(data){
+				addNewRow(data.data); // data.data는 vo 객체를 가져옴
+			})
+		})
+		function addNewRow(row) {
+		    table.row
+		        .add({
+		        	replyId: row.replyId,
+		        	reply: row.reply,
+		        	replyer: row.replyer,
+		        	replyDate: row.replyDate,
+			})
+		        .draw(false);
+		}
+		 
+		 
+		
+    </script>
 </body>
 </html>

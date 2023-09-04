@@ -135,51 +135,32 @@ input {
   <span onclick="newElement()" class="addBtn">Add</span>
 </div>
 
-<ul id="myUL" style="display: none">
-  <li>Hit the gym</li>
-  <li class="checked">Pay bills</li>
-  <li>Meet George</li>
-  <li>Buy eggs</li>
-  <li>Read a book</li>
-  <li>Organize office</li>
+<ul id="myUL">
+
 </ul>
 
 <script src="../js/todo.js"></script>
 <script src="../js/jquery.min.js"></script>
 <script>
 var todo = new Todo();
+
 $(function(){
-	$.ajax({
-		url: '../AjaxTodoSelect.do',
-		success: function(data){
-			for(var i in data){
-				liMake(data[i]);
-			}	
-		}
+	todo.todoList(function(data){
+		for(var i in data){
+			liMake(data[i]);
+		}	
 	})
 })
 
-$(function(){
-	$.ajax({
-		url: '../AjaxTodoInsert.do',
-		success: function(data){
-			newElement(data);
-		}
-	})
-})
 // Create a "close" button and append it to each list item
 $('li').map((idx,myNode) => {
 	var span = $('<span>').attr('class','close').text('\u00D7');
 	myNode.appendChild(span.get(0));
 });
 
+
+$('.close').on('click', todoDelete);
 // Click on a close button to hide the current list item
-addCloseOnclick();
-function addCloseOnclick(){
-	$('.close').on('click',function(){
-		$(this).parent().css('display','none');
-	})
-}
 
 // Add a "checked" symbol when clicking on a list item
 $('ul').on('click',function(){
@@ -190,7 +171,7 @@ $('ul').on('click',function(){
 
 
 // Create a new list item when clicking on the "Add" button
-function newElement(data) {
+function newElement() {
 	var myInput = $('#myInput');
 	var myDue = $('#myDue');
 	if (myInput.val() === '') {
@@ -198,16 +179,14 @@ function newElement(data) {
 		return;
 	}
 	
-
-		
+	var param = {todo: myInput.val(), dueDate: myDue.val()};
+	todo.todoInsert(param, function(data){
+		liMake(data.data);
+		console.log(myInput.val());
+		console.log(myDue.val());
 		myInput.val("");
 		myDue.val("");
-		
-	
-	
-	var span = $('<span>').attr('class','close').text('\u00D7');
-	li.get(0).appendChild(span.get(0));
-	addCloseOnclick();
+	})
 }
 
 function liMake(data){
@@ -221,7 +200,15 @@ function liMake(data){
 	if(data.complete == 'true'){
 		li.addClass('checked');
 	}	
+	span.on('click', todoDelete);
+}
+function todoDelete(){
+	var parent = $(this).parent();
+	var todoNumber = parent.data('no');
 	
+	todo.todoDelete(todoNumber, function(){
+		parent.css('display','none');
+	});
 }
 </script>
 </body>

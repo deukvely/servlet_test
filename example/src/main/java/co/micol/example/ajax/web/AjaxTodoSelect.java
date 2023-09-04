@@ -41,7 +41,6 @@ public class AjaxTodoSelect extends HttpServlet {
 		vo = service.todoList();
 		
 		Gson gson = new GsonBuilder().create();
-		System.out.println(vo);
 		
 		response.setContentType("text/json; charset=utf-8");
 		response.getWriter().print(gson.toJson(vo));

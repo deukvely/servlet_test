@@ -5,7 +5,7 @@
 		<selectKey resultType="co.micol.example.ajax.service.TodoVO">
 			SELECT SEQ_TODO.NEXTVAL AS TODONUMBER, SYSDATE AS DUEDATE FROM DUAL
 		</selectKey>
-		INSERT INTO TODO
+		INSERT INTO TODO (todo_number, todo, due_date, complete)
 		VALUES(#{todoNumber}, #{todo}, #{dueDate}, #{complete})
 	</insert>
 	
